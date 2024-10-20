@@ -1,0 +1,9 @@
+build/*
+install/*
+log/*
+src/build/*
+src/install/*
+src/log/*
+.vscode
+__pycache__
+build/ros2cpp_tutorials*
