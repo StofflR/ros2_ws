@@ -1,0 +1,5 @@
+ros2cpp_tutorials: # namespace
+  parameter: # node name
+    ros__parameters:
+      topic: "/a200_0000/sensors/lidar2d_0/scan"
+      queue_size: 10

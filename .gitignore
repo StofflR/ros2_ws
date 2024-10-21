@@ -7,3 +7,9 @@ src/log/*
 .vscode
 __pycache__
 build/ros2cpp_tutorials*
+src/husky_highlevel_controller/build/
+src/husky_highlevel_controller/install/
+src/husky_highlevel_controller/log/
+src/husky_highlevel_controller/launch/build
+src/husky_highlevel_controller/launch/install/
+src/husky_highlevel_controller/launch/log/
