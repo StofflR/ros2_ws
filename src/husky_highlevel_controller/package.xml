@@ -4,13 +4,15 @@
   <name>husky_highlevel_controller</name>
   <version>0.0.0</version>
   <description>Scan message from the Husky robot and process the incoming data.</description>
-  <maintainer email="stephan.robinig@edu.uni-graz.at">stoffl</maintainer>
+  <maintainer email="stephan.robinig@student.tugraz.at">stoffl</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
   <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

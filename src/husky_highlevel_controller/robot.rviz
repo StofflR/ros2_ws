@@ -5,7 +5,8 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /LaserScan1
+        - /Marker1
+        - /Marker1/Topic1
       Splitter Ratio: 0.5
     Tree Height: 516
   - Class: rviz_common/Selection
@@ -600,7 +601,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
+      Size (m): 0.05000000074505806
       Style: Flat Squares
       Topic:
         Depth: 5
@@ -611,6 +612,19 @@ Visualization Manager:
         Value: /a200_0000/sensors/lidar2d_0/scan
       Use Fixed Frame: true
       Use rainbow: true
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Marker
+      Namespaces:
+        "": true
+      Topic:
+        Depth: 10
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /estimate
       Value: true
   Enabled: true
   Global Options:
@@ -627,25 +641,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 11.008293151855469
+      Distance: 5.863886833190918
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 4.8252973556518555
+        Y: 1.206026315689087
+        Z: 0.5537964105606079
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8003979921340942
+      Pitch: 0.3353985548019409
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.920380115509033
+      Yaw: 5.908547401428223
     Saved: ~
 Window Geometry:
   Displays:
@@ -659,5 +673,5 @@ Window Geometry:
   Tool Properties:
     collapsed: false
   Width: 1000
-  X: 74
-  Y: 298
+  X: 290
+  Y: 284

@@ -5,6 +5,8 @@ src/build/*
 src/install/*
 src/log/*
 .vscode
+.cmake*
+cmake-build*
 __pycache__
 build/ros2cpp_tutorials*
 src/husky_highlevel_controller/build/
@@ -13,3 +15,12 @@ src/husky_highlevel_controller/log/
 src/husky_highlevel_controller/launch/build
 src/husky_highlevel_controller/launch/install/
 src/husky_highlevel_controller/launch/log/
+
+vt2425g87
+
+src/husky_highlevel_controller/frames_*.pdf
+src/husky_highlevel_controller/frames_*.gv
+
+src/.idea/
+
+src/husky_highlevel_controller/exercise3/
