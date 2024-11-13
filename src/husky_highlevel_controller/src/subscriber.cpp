@@ -11,6 +11,8 @@
 #include "tf2_ros/transform_listener.h"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
+#include "std_srvs/srv/set_bool.hpp"
+
 namespace husky_highlevel_controller
 {
 
@@ -42,18 +44,40 @@ namespace husky_highlevel_controller
       publisher_estimate_ = create_publisher<visualization_msgs::msg::Marker>("/estimate", 10);
       tf_buffer_ = std::make_shared<tf2_ros::Buffer>(get_clock());
       tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+      service_ = create_service<std_srvs::srv::SetBool>(
+          "toggle_subscription",
+          std::bind(&Subscriber::toggle_subscription, this, std::placeholders::_1, std::placeholders::_2));
     }
-
   private:
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
     rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr publisher_estimate_;
     OnSetParametersCallbackHandle::SharedPtr param_callback_handel_;
 
+    rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr service_;
     tf2_ros::Buffer::SharedPtr tf_buffer_;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
+    bool is_subscribed_ = true;
+
   private:
+    void toggle_subscription(
+        const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
+        std::shared_ptr<std_srvs::srv::SetBool::Response> response)
+    {
+      if (request->data)
+      {
+        is_subscribed_ = true;
+        response->message = "Resumed subscription";
+      }
+      else
+      {
+        is_subscribed_ = false;
+        response->message = "Paused subscription";
+      }
+      response->success = true;
+    }    
+
     void callback(const sensor_msgs::msg::LaserScan &msg)
     {
       auto min = std::min_element(msg.ranges.begin(), msg.ranges.end());
@@ -62,11 +86,13 @@ namespace husky_highlevel_controller
       // turn robot to angle and move in direction of the minimum range
       geometry_msgs::msg::Twist twist;
       // check if the minimum distance is less than 0.5m and not infinity
-      if (distance > 0.0 && distance != std::numeric_limits<float>::infinity())
-        twist.linear.x = distance;
-      twist.angular.z = min_angle;
+      if(is_subscribed_)
+      {
+        if (distance > 0.0 && distance != std::numeric_limits<float>::infinity())
+          twist.linear.x = distance;
+        twist.angular.z = min_angle;
+      }
       publisher_->publish(twist);
-
       geometry_msgs::msg::Point trans;
 
       try

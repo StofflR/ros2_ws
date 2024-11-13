@@ -20,7 +20,7 @@ def generate_launch_description():
     # Include simulation launch file and start rviz
     sim = IncludeLaunchDescription(PythonLaunchDescriptionSource([sim_launch]),
             launch_arguments=[
-            ('rviz', 'true'),
+            ('rviz', 'false'),
             ('world', 'single_pillar')]
     )
 
@@ -54,10 +54,35 @@ def generate_launch_description():
         remappings=[('/tf', '/a200_0000/tf'), ('/tf_static', '/a200_0000/tf_static')]
         
     )
-
+    distance_stop_node = Node(
+        package="husky_highlevel_controller",
+        executable="distance_stop",
+        name="distance_stop",
+        output="screen",        
+        prefix="gnome-terminal --",
+        parameters=[param_file],
+        namespace="a200_0000",
+        # remap tf and tf static to a200_0000
+        remappings=[('/tf', '/a200_0000/tf'), ('/tf_static', '/a200_0000/tf_static')]
+        
+    )
+    crash_stop_node = Node(
+        package="husky_highlevel_controller",
+        executable="crash_stop",
+        name="crash_stop",
+        output="screen",        
+        prefix="gnome-terminal --",
+        parameters=[param_file],
+        namespace="a200_0000",
+        # remap tf and tf static to a200_0000
+        remappings=[('/tf', '/a200_0000/tf'), ('/tf_static', '/a200_0000/tf_static')]
+        
+    )
     # Create launch description and add actions
     ld = LaunchDescription()
     ld.add_action(sim)
     # ld.add_action(teleopt_node)
     ld.add_action(high_level)
+    ld.add_action(distance_stop_node)
+    #ld.add_action(crash_stop_node)
     return ld

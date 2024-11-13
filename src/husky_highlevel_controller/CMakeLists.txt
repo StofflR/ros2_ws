@@ -14,14 +14,28 @@ find_package(visualization_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 
 add_executable(subscriber "src/subscriber.cpp")
+add_executable(distance_stop "src/distance_stop.cpp")
+add_executable(crash_stop "src/crash_stop.cpp")
+
 target_compile_features(subscriber PUBLIC cxx_std_17)
-ament_target_dependencies(subscriber rclcpp sensor_msgs geometry_msgs visualization_msgs tf2 tf2_ros tf2_geometry_msgs)
+target_compile_features(distance_stop PUBLIC cxx_std_17)
+target_compile_features(crash_stop PUBLIC cxx_std_17)
+ament_target_dependencies(subscriber rclcpp sensor_msgs geometry_msgs visualization_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
+ament_target_dependencies(distance_stop rclcpp sensor_msgs std_srvs)
+ament_target_dependencies(crash_stop rclcpp sensor_msgs std_srvs)
+
+target_link_libraries(subscriber ${cpp_typesupport_target})
+target_link_libraries(distance_stop ${cpp_typesupport_target})
+target_link_libraries(crash_stop ${cpp_typesupport_target})
 
 install(
   TARGETS
     subscriber
+    distance_stop
+    crash_stop
   DESTINATION lib/${PROJECT_NAME}
 )
 
